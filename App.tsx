@@ -1,12 +1,9 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import Navigation from '@navigation';
+import {HomeScreen} from '@screens';
 
 const App = () => {
-  return (
-    <View>
-      <Text>App</Text>
-    </View>
-  );
+  return <Navigation />;
 };
 
 export default App;

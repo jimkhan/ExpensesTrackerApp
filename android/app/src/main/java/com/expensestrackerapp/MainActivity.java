@@ -2,6 +2,8 @@ package com.expensestrackerapp;
 
 import com.facebook.react.ReactActivity;
 
+import android.os.Bundle; // added for navigation
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -11,5 +13,9 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "ExpensesTrackerApp";
+  }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
   }
 }

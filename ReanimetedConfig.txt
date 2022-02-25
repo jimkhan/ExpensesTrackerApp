@@ -1,0 +1,61 @@
+Start->
+
+npm i react-native-reanimated
+
+Add Reanimated's babel plugin to your babel.config.js:
+
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: [
+    [
+      'module-resolver',
+      {
+        root: ['.'],
+        alias: {
+          '@components': './src/components',
+          '@common': './src/components/common',
+          '@screens': './src/screens',
+          '@img': './src/img',
+          '@config': './src/config',
+          '@store': './src/store',
+          '@dataType': './src/data',
+          '@Api': './src/api',
+          '@navigation': './src/navigation',
+          types: 'types',
+        },
+        extensions: ['.ts', '.tsx', '.jsx', '.js', '.json', '.svg', '.jpg'],
+      },
+    ],
+    'react-native-reanimated/plugin', // add this line
+  ],
+};
+
+Next -> 
+Turn on Hermes engine by editing android/app/build.gradle
+
+project.ext.react = [
+  enableHermes: true  // <- here | clean and rebuild if changing
+]
+
+Next ->
+
+  import com.facebook.react.bridge.JSIModulePackage; // <- add
+  import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
+  ...
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+  ...
+
+      @Override
+      protected String getJSMainModuleName() {
+        return "index";
+      }
+
+      @Override
+      protected JSIModulePackage getJSIModulePackage() {
+        return new ReanimatedJSIModulePackage(); // <- add
+      }
+    };
+  ...
+
+then restart the bundler using
+npm start -- --reset-cache
