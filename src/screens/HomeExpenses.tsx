@@ -1,11 +1,17 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
+import {ExpensesCard} from '@components';
+import {AppText, AppTextInput} from '@common';
 
 const HomeExpenses = () => {
   return (
-    <View>
-      <Text>HomeExpenses</Text>
-    </View>
+    <>
+      <ExpensesCard />
+      <ExpensesCard />
+      <ExpensesCard />
+      <ExpensesCard />
+      <ExpensesCard />
+    </>
   );
 };
 
