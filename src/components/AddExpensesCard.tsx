@@ -1,4 +1,4 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 import React, {useState} from 'react';
 import {
   heightPercentageToDP as hp,
@@ -8,17 +8,48 @@ import {Colors, FontFamily, FontSize} from '@config';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker';
 import {AppTextInput, AppButton} from '@common';
+import {addExpenses} from '../feature/Expenses';
+import {useAppDispatch} from '@store';
 
 const AddExpensesCard = () => {
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
-  const [items, setItems] = useState([
+  const [amount, setAmount] = useState<number>(0);
+  const [description, setDescription] = useState<string>('');
+  const [value, setValue] = useState<string>('');
+  const [items, setItems] = useState<{label: string; value: string}[]>([
     {label: 'Food Expenses', value: 'food'},
     {label: 'Shopping Expenses', value: 'shopping'},
     {label: 'Home Expenses', value: 'home'},
   ]);
   const [date, setDate] = useState(new Date());
   const [openDate, setOpenDate] = useState(false);
+
+  const handleSubmit = async () => {
+    const ID = () => {
+      return Math.random().toString(36).slice(2);
+    };
+    const data = {
+      id: ID(),
+      type: value,
+      amount: amount,
+      description: description,
+      createAt: date,
+    };
+    await dispatch(addExpenses(data));
+    Alert.alert('Success', 'Successfully added to the list', [
+      {
+        text: 'OK',
+        onPress: () => {
+          setAmount(0);
+          setDate(new Date());
+          setDescription('');
+          setValue('');
+        },
+      },
+    ]);
+    console.log('Pressed ', data);
+  };
   return (
     <View style={styles.container}>
       <DropDownPicker
@@ -37,6 +68,8 @@ const AddExpensesCard = () => {
       />
       <AppTextInput
         icon="ios-wallet-outline"
+        value={amount}
+        onChangeText={(val: number) => setAmount(val)}
         keyboardType={'numeric'}
         placeholder={'Enter amount'}
       />
@@ -45,6 +78,8 @@ const AddExpensesCard = () => {
         styletext={styles.inputArea}
         multiline={true}
         placeholder={'Description'}
+        value={description}
+        onChangeText={(val: string) => setDescription(val)}
       />
       <DatePicker
         modal
@@ -69,6 +104,7 @@ const AddExpensesCard = () => {
       />
       <AppButton
         title="Submit"
+        onPress={handleSubmit}
         textStyle={{color: Colors.white}}
         style={styles.submitButton}
       />

@@ -1,7 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RootStackParamList} from 'types';
-import {HomeExpenses, CreateExpnesesScreen} from '@screens';
+import {CreateExpnesesScreen} from '@screens';
+import RootDrawerNavigator from '../drawerNavigator';
 import {Colors} from '@config';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -10,8 +11,8 @@ const RootStackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
-        component={HomeExpenses}
+        name="Root"
+        component={RootDrawerNavigator}
         options={{
           headerShown: false,
         }}

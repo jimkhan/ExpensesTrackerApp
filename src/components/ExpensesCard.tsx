@@ -7,13 +7,22 @@ import {
 } from 'react-native-responsive-screen';
 import {Colors, FontFamily} from '@config';
 
-const ExpensesCard = () => {
+interface Props {
+  type: string;
+  amount: number;
+  description: string;
+  date: Date;
+}
+
+const ExpensesCard = ({type, amount, description, date}: Props) => {
   return (
     <View style={styles.container}>
-      <AppText style={styles.expensesType}>Expenses type:</AppText>
-      <AppText style={styles.amount}>Amount:</AppText>
-      <AppText style={styles.description}>Description:</AppText>
-      <AppText style={styles.createAt}>Create at:</AppText>
+      <AppText style={styles.expensesType}>
+        Expenses type: {type} Expenses
+      </AppText>
+      <AppText style={styles.amount}>Amount: {amount}</AppText>
+      <AppText style={styles.description}>Description: {description}</AppText>
+      <AppText style={styles.createAt}>Create at: {date.toString()}</AppText>
     </View>
   );
 };
@@ -26,6 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     marginBottom: hp(1),
     padding: hp(1),
+    borderRadius: hp(1),
   },
   expensesType: {
     fontFamily: FontFamily.SourceSansB,
